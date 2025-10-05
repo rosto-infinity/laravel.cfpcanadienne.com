@@ -22,21 +22,21 @@
                     --color-secondary: oklch(.448 .119 151.328); /* green-800 */
                     --color-bg-light: #fdfdfc;
                     --color-bg-dark: #0a0a0a;
-                    --color-text-light: #1b1b18;
+                    --color-text-light: #7917f9;
                     --color-text-dark: #ededec;
                 }
             }
             @layer base {
                 body {
-                    @apply bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC];
+                    @apply bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#7917f9] dark:text-[#EDEDEC];
                 }
             }
         </style>
     @endif
 </head>
-<body class="min-h-screen flex flex-col items-center p-6 lg:p-8 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] dark:text-[#EDEDEC]">
+<body class="min-h-screen flex flex-col items-center p-6 lg:p-8 bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#7917f9] dark:text-[#EDEDEC]">
     <header class="w-full max-w-4xl mb-8 text-center">
-        <h1 class="text-3xl lg:text-4xl font-semibold text-[#1b1b18] dark:text-[#EDEDEC] mb-2">
+        <h1 class="text-3xl lg:text-4xl font-semibold text-[#7917f9] dark:text-[#EDEDEC] mb-2">
             Déployer Laravel sur un serveur mutualisé
         </h1>
         <p class="text-[#706f6c] dark:text-[#A1A09A] text-lg">
@@ -48,7 +48,7 @@
         <!-- Partie 1 -->
         <section class="bg-white dark:bg-[#161615] rounded-lg shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] p-6 lg:p-8">
             <div class="flex items-center gap-3 mb-4">
-                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] text-[#1b1b18] dark:text-[#EDEDEC] font-medium">1</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#7917f9] dark:bg-[#3E3E3A] text-[#7917f9] dark:text-[#EDEDEC] font-medium">1</span>
                 <h2 class="text-xl font-medium text-[#1b1b18] dark:text-[#EDEDEC]">Comprendre les contraintes du mutualisé</h2>
             </div>
             <div class="prose prose-sm dark:prose-invert max-w-none text-[#1b1b18] dark:text-[#A1A09A] space-y-3">
@@ -60,7 +60,7 @@
         <!-- Partie 2 -->
         <section class="bg-white dark:bg-[#161615] rounded-lg shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] p-6 lg:p-8">
             <div class="flex items-center gap-3 mb-4">
-                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] text-[#1b1b18] dark:text-[#EDEDEC] font-medium">2</span>
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#7917f9] dark:bg-[#3E3E3A] text-[#1b1b18] dark:text-[#EDEDEC] font-medium">2</span>
                 <h2 class="text-xl font-medium text-[#1b1b18] dark:text-[#EDEDEC]">Préparer l’environnement sur Hostinger</h2>
             </div>
             <div class="space-y-3 text-[#1b1b18] dark:text-[#A1A09A]">
@@ -77,10 +77,10 @@
         <!-- Partie 3 -->
         <section class="bg-white dark:bg-[#161615] rounded-lg shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] p-6 lg:p-8">
             <div class="flex items-center gap-3 mb-4">
-                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#dbdbd7] dark:bg-[#3E3E3A] text-[#1b1b18] dark:text-[#EDEDEC] font-medium">3</span>
-                <h2 class="text-xl font-medium text-[#1b1b18] dark:text-[#EDEDEC]">Transférer et configurer votre projet</h2>
+                <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#7917f9] dark:bg-[#3E3E3A] text-[#1b1b18] dark:text-[#EDEDEC] font-medium">3</span>
+                <h2 class="text-xl font-medium text-[#7917f9] dark:text-[#EDEDEC]">Transférer et configurer votre projet</h2>
             </div>
-            <div class="space-y-3 text-[#1b1b18] dark:text-[#A1A09A]">
+            <div class="space-y-3 text-[#7917f9] dark:text-[#A1A09A]">
                 <p>Sur un mutualisé standard (sans SSH), le déploiement se fait manuellement :</p>
                 <ol class="list-decimal pl-5 space-y-1">
                     <li>En local, exécutez :
