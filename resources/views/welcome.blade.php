@@ -40,7 +40,7 @@
             Déployer Laravel sur un serveur mutualisé
         </h1>
         <p class="text-[#706f6c] dark:text-[#A1A09A] text-lg">
-            Guide complet – Parties 1 à 3 (Focus Hostinger - Laravel)
+            Guide complet – Parties 1 à 5 (Focus Hostinger - Laravel)
         </p>
     </header>
 
