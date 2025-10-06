@@ -45,7 +45,7 @@
     </header>
 
     <main class="w-full max-w-4xl space-y-10">
-        <!-- Partie 1 -->
+        <!-- --Partie 1 -->
         <section class="bg-white dark:bg-[#161615] rounded-lg shadow-[0px_0px_1px_0px_rgba(0,0,0,0.03),0px_1px_2px_0px_rgba(0,0,0,0.06)] p-6 lg:p-8">
             <div class="flex items-center gap-3 mb-4">
                 <span class="flex h-8 w-8 items-center justify-center rounded-full bg-[#7917f9] dark:bg-[#3E3E3A] text-white dark:text-[#EDEDEC] font-medium">1</span>
