@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layoutsapp.app')
 
 @section('title', 'Nos Partenaires')
 
