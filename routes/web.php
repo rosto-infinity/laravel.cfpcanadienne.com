@@ -17,14 +17,7 @@ Route::get('/', function () {
     return view('welcome', compact('partenaires'));
 })->name('welcome');
 
-Route::get('/linkstorage', function () {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('storage:link');
-        return "✔️ Lien symbolique créé avec succès !";
-    } catch (\Exception $e) {
-        return "❌ Erreur : " . $e->getMessage();
-    }
-});
+
 
 
 
