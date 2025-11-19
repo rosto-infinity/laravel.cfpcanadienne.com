@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Partenaire extends Model
 {
@@ -19,48 +19,75 @@ class Partenaire extends Model
         'description',
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
-    /**
-     * Relation avec l'utilisateur
-     */
-    public function user(): BelongsTo
+    // Relation avec l'utilisateur
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Scope pour les partenaires approuvés
-     */
+    // Scopes pour filtrer par statut
     public function scopeApprouves($query)
     {
         return $query->where('statut', 'approuve');
     }
 
-    /**
-     * Scope pour les partenaires en attente
-     */
     public function scopeEnAttente($query)
     {
         return $query->where('statut', 'en_attente');
     }
 
-    /**
-     * Obtenir l'URL complète du logo
-     */
-    public function getLogoUrlAttribute(): ?string
+    public function scopeRejetes($query)
     {
-        return $this->logo ? asset('storage/' . $this->logo) : null;
+        return $query->where('statut', 'rejete');
     }
 
-    /**
-     * Vérifier si le partenaire est approuvé
-     */
-    public function isApprouve(): bool
+    // Accesseur pour l'URL du logo
+    public function getLogoUrlAttribute()
+    {
+        if ($this->logo) {
+            return Storage::url($this->logo);
+        }
+        return null;
+    }
+
+    // Vérifier si le partenaire est approuvé
+    public function isApprouve()
     {
         return $this->statut === 'approuve';
+    }
+
+    // Vérifier si le partenaire est en attente
+    public function isEnAttente()
+    {
+        return $this->statut === 'en_attente';
+    }
+
+    // Vérifier si le partenaire est rejeté
+    public function isRejete()
+    {
+        return $this->statut === 'rejete';
+    }
+
+    // Badge de statut avec couleur
+    public function getBadgeStatutAttribute()
+    {
+        return match($this->statut) {
+            'approuve' => [
+                'text' => 'Approuvé',
+                'class' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
+            ],
+            'en_attente' => [
+                'text' => 'En attente',
+                'class' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
+            ],
+            'rejete' => [
+                'text' => 'Rejeté',
+                'class' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+            ],
+            default => [
+                'text' => 'Inconnu',
+                'class' => 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+            ]
+        };
     }
 }

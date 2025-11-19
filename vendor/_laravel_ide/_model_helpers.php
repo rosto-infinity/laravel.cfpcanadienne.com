@@ -15,6 +15,7 @@ namespace App\Models {
      * @property int $user_id
      * @property int $id
      * @property-read mixed $logo_url
+     * @property-read mixed $badge_statut
      * @property-read \App\Models\User $user
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire whereUserId($value)
@@ -27,6 +28,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire approuves()
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire enAttente()
+     * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire rejetes()
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Partenaire>|Partenaire query()
@@ -338,6 +340,7 @@ namespace App\Models {
      * @property string $email
      * @property string $name
      * @property int $id
+     * @property-read mixed $role
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Partenaire> $partenaires
      * @property-read int|null $partenaires_count
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
