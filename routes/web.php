@@ -1,12 +1,17 @@
 <?php
 
+use App\Models\Partenaire;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PartenaireController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+     $partenaires = Partenaire::with('user')
+            ->approuves()
+            ->latest()
+            ->paginate(12);
+    return view('welcome',compact('partenaires'));
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -21,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/partenaires/{partenaire}/edit', [PartenaireController::class, 'edit'])->name('partenaires.edit');
     Route::put('/partenaires/{partenaire}', [PartenaireController::class, 'update'])->name('partenaires.update');
     Route::delete('/partenaires/{partenaire}', [PartenaireController::class, 'destroy'])->name('partenaires.destroy');
+   
+   
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

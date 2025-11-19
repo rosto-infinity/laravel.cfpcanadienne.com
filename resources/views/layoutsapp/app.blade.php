@@ -16,25 +16,31 @@
     <nav class="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="{{ route('partenaires.index') }}" class="text-xl font-bold text-purple-600 dark:text-purple-400">
+                <div class="flex items-center space-x-8">
+                    <a href="{{ route('welcome') }}" class="text-xl font-bold text-[#7917f9] ">
+                        Accueil
+                    </a>
+                    <a href="{{ route('partenaires.index') }}" class="text-xl font-bold text-[#7917f9]">
                         Partenaires
+                    </a>
+                    <a href="{{ route('dashboard') }}" class="text-xl font-bold text-[#7917f9]">
+                        Tableau de bord
                     </a>
                 </div>
                 
                 <div class="flex items-center space-x-4">
                     @auth
-                        <a href="{{ route('partenaires.mes-partenaires') }}" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium">
+                        <a href="{{ route('partenaires.mes-partenaires') }}" class="text-gray-700 dark:text-gray-300 hover:text-[#7917f9] dark:hover:text-purple-400 font-medium">
                             Mes Partenariats
                         </a>
-                        <a href="{{ route('partenaires.create') }}" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:scale-105 shadow-lg">
+                        <a href="{{ route('partenaires.create') }}" class="bg-gradient-to-r from-purple-600 to-[#7917f9] hover:from-purple-700 hover:to-[#7917f9] text-white px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:scale-105 shadow-lg">
                             Devenir Partenaire
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 font-medium">
+                        <a href="{{ route('login') }}" class="text-gray-700 dark:text-gray-300 hover:text-[#7917f9] dark:hover:text-purple-400 font-medium">
                             Connexion
                         </a>
-                        <a href="{{ route('register') }}" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-xl font-medium">
+                        <a href="{{ route('register') }}" class="bg-gradient-to-r from-purple-600 to-[#7917f9] text-white px-4 py-2 rounded-xl font-medium">
                             Inscription
                         </a>
                     @endauth

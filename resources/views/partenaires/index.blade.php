@@ -7,7 +7,7 @@
     <!-- Hero Section -->
     <div class="text-center mb-12">
         <h1 class="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4">
-            Nos <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Partenaires</span>
+            Nos <span class="bg-gradient-to-r from-purple-600 to-[#7917f9] bg-clip-text text-transparent">Partenaires</span>
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Découvrez les entreprises et organisations qui nous font confiance
@@ -24,7 +24,7 @@
                         @if($partenaire->logo)
                             <img src="{{ $partenaire->logo_url }}" alt="{{ $partenaire->nom }}" class="max-h-32 w-auto object-contain group-hover:scale-110 transition-transform duration-300">
                         @else
-                            <div class="h-32 w-32 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center">
+                            <div class="h-32 w-32 rounded-2xl bg-gradient-to-br from-purple-600 to-[#7917f9] flex items-center justify-center">
                                 <span class="text-4xl font-bold text-white">{{ substr($partenaire->nom, 0, 1) }}</span>
                             </div>
                         @endif
@@ -44,7 +44,7 @@
 
                         <div class="flex items-center justify-between">
                             @if($partenaire->siteweb)
-                                <a href="{{ $partenaire->siteweb }}" target="_blank" class="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium text-sm group">
+                                <a href="{{ $partenaire->siteweb }}" target="_blank" class="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-[#7917f9] dark:hover:text-purple-300 font-medium text-sm group">
                                     <span>Visiter le site</span>
                                     <svg class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -75,7 +75,7 @@
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Aucun partenaire pour le moment</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6">Soyez le premier à rejoindre notre réseau !</p>
             @auth
-                <a href="{{ route('partenaires.create') }}" class="inline-flex bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 shadow-lg">
+                <a href="{{ route('partenaires.create') }}" class="inline-flex bg-gradient-to-r from-purple-600 to-[#7917f9] hover:from-[#7917f9] hover:to-[#7917f9] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 shadow-lg">
                     Devenir Partenaire
                 </a>
             @endauth

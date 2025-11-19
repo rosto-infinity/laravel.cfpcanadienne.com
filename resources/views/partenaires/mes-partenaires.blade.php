@@ -15,7 +15,7 @@
             </p>
         </div>
         <a href="{{ route('partenaires.create') }}" 
-            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            class="bg-gradient-to-r from-[#7917f9] to-[#7917f9] hover:from-[#7917f9] hover:to-[#7917f9] text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             Nouveau Partenariat
         </a>
     </div>
@@ -32,7 +32,7 @@
                                     @if($partenaire->logo)
                                         <img src="{{ $partenaire->logo_url }}" alt="{{ $partenaire->nom }}" class="max-h-full max-w-full object-contain">
                                     @else
-                                        <span class="text-3xl font-bold text-purple-600">{{ substr($partenaire->nom, 0, 1) }}</span>
+                                        <span class="text-3xl font-bold text-[#7917f9]">{{ substr($partenaire->nom, 0, 1) }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                             {{ $partenaire->nom }}
                                         </h3>
                                         @if($partenaire->siteweb)
-                                            <a href="{{ $partenaire->siteweb }}" target="_blank" class="text-sm text-purple-600 dark:text-purple-400 hover:underline">
+                                            <a href="{{ $partenaire->siteweb }}" target="_blank" class="text-sm text-[#7917f9] dark:text-[#7917f9] hover:underline">
                                                 {{ $partenaire->siteweb }}
                                             </a>
                                         @endif
@@ -94,7 +94,7 @@
                             <!-- Actions -->
                             <div class="flex md:flex-col gap-2">
                                 <a href="{{ route('partenaires.edit', $partenaire) }}" 
-                                    class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border-2 border-purple-600 text-purple-600 hover:bg-purple-50 dark:border-purple-400 dark:text-purple-400 dark:hover:bg-purple-900/20 font-medium transition-all">
+                                    class="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl border-2 border-[#7917f9] text-[#7917f9] hover:bg-purple-50 dark:border-[#7917f9] dark:text-[#7917f9] dark:hover:bg-purple-900/20 font-medium transition-all">
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
@@ -138,14 +138,14 @@
     @else
         <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 p-12 text-center">
             <div class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-purple-100 dark:bg-purple-900/20 mb-4">
-                <svg class="h-8 w-8 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-8 w-8 text-[#7917f9] dark:text-[#7917f9]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
             </div>
             <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Aucun partenariat</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-6">Vous n'avez pas encore soumis de demande de partenariat.</p>
             <a href="{{ route('partenaires.create') }}" 
-                class="inline-flex bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                class="inline-flex bg-gradient-to-r from-[#7917f9] to-[#7917f9] hover:from-[#7917f9] hover:to-[#7917f9] text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                 Créer mon premier partenariat
             </a>
         </div>

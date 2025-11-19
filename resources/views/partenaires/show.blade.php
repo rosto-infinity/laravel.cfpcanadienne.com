@@ -1,13 +1,16 @@
+@extends('layoutsapp.app')
+
+
 @section('title', $partenaire->nom)
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
         <!-- Hero Section -->
-        <div class="bg-gradient-to-br from-purple-600 via-pink-600 to-purple-700 p-12 text-center">
-            <div class="inline-flex h-32 w-32 items-center justify-center rounded-3xl bg-white/10 backdrop-blur-lg border-4 border-white/20 mb-6">
+        <div class="bg-gradient-to-br from-[#7917f9] via-[#7917f9] to-[#7917f9] p-12 text-center">
+            <div class="inline-flex h-24 w-24  items-center justify-center ">
                 @if($partenaire->logo)
-                    <img src="{{ $partenaire->logo_url }}" alt="{{ $partenaire->nom }}" class="max-h-24 max-w-24 object-contain">
+                    <img src="{{ $partenaire->logo_url }}" alt="{{ $partenaire->nom }}" class="max-h-full max-w-full object-contain">
                 @else
                     <span class="text-6xl font-bold text-white">{{ substr($partenaire->nom, 0, 1) }}</span>
                 @endif
@@ -43,7 +46,7 @@
                             <p class="text-gray-600 dark:text-gray-400 text-sm">Découvrez tous nos produits et services</p>
                         </div>
                         <a href="{{ $partenaire->siteweb }}" target="_blank" 
-                            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 inline-flex items-center gap-2">
+                            class="bg-gradient-to-r from-[#7917f9] to-[#7917f9] hover:from-[#7917f9]hover:to-pink-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 inline-flex items-center gap-2">
                             Visiter le site
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -56,7 +59,7 @@
             <!-- Back Button -->
             <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
                 <a href="{{ route('partenaires.index') }}" 
-                    class="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium">
+                    class="inline-flex items-center gap-2 text-[#7917f9] dark:text-[#7917f9] hover:text-[#7917f9]dark:hover:text-purple-300 font-medium">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
