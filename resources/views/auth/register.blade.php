@@ -85,7 +85,7 @@
                         </div>
 
                         <!-- Terms & Conditions -->
-                        <div class="flex items-start mb-3">
+                        {{-- <div class="flex items-start mb-3">
                             <div class="relative">
                                 <input id="terms" type="checkbox" class="peer sr-only" name="terms" required>
                                 <div class="w-4 h-4 flex items-center justify-center rounded border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] peer-checked:border-[#7917f9] peer-checked:bg-[#7917f9] transition-all duration-200">
@@ -97,7 +97,7 @@
                             <label for="terms" class="ms-2 text-sm text-gray-700 dark:text-gray-300">
                                 J'accepte les <a href="#" class="text-[#7917f9] hover:text-[#7917f9]/80 font-medium underline">conditions d'utilisation</a>
                             </label>
-                        </div>
+                        </div> --}}
 
                         <!-- Submit Button & Login Link -->
                         <div class="space-y-4">
