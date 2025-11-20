@@ -39,6 +39,10 @@
       
            @if (Route::has('login'))
                 <nav class="flex items-center justify-center gap-4">
+                    <a href="/" class="inline-block ">
+                    <x-application-logo class="w-12 h-12 fill-current text-[#7917f9] " /> 
+                   
+                </a>
                     @auth
                         <a
                             href="{{ url('/dashboard') }}"

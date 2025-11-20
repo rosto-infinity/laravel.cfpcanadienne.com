@@ -21,7 +21,10 @@
         <div class="flex flex-col items-center justify-center bg-white dark:bg-gray-800 p-8 lg:p-12 border-r border-gray-200 dark:border-gray-700">
             <div class="max-w-md w-full text-center lg:text-left">
                 <a href="/" class="inline-block mb-8">
-                    <x-application-logo class="w-24 h-24 fill-current text-[#7917f9]" />
+                    <x-application-logo class="w-24 h-24 fill-current text-[#7917f9]" /> 
+                    <span class="text-[#7917f9] text-center font-semibold text-lg">
+                        Laravel Projets <br> Partenaires
+                        </span>
                 </a>
                 <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
                     Bienvenue sur notre plateforme

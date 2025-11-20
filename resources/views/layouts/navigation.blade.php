@@ -4,7 +4,11 @@
         <div class="flex justify-between h-16">
             <div class="flex">
               
-
+                <nav class="flex items-center justify-center gap-4">
+                    <a href="/" class="inline-block ">
+                    <x-application-logo class="w-10 h-10 fill-current text-[#7917f9]" /> 
+                   
+                </a>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

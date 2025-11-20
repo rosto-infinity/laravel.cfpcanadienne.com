@@ -18,7 +18,11 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center space-x-8">
                     <a href="{{ route('welcome') }}" class="text-xl font-bold text-[#7917f9] ">
-                        Accueil
+                           <nav class="flex items-center justify-center gap-4">
+                   
+                    <x-application-logo class="w-10 h-10 fill-current text-[#7917f9] " /> 
+                   
+             
                     </a>
                     <a href="{{ route('partenaires.index') }}" class="text-xl font-bold text-[#7917f9]">
                         Partenaires

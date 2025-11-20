@@ -13,7 +13,7 @@
             </div>
 
             <!-- Session Status -->
-            <x-auth-session-status class="mb-6" :status="session('status')" />
+            <x-auth-session-status class="mb-3" :status="session('status')" />
 
             <!-- Formulaire de connexion -->
             <div class="bg-white dark:bg-[#161615] rounded-2xl border border-gray-200 dark:border-[#3E3E3A] shadow-[0px_0px_1px_0px_rgba(0,0,0,0.05),0px_2px_8px_0px_rgba(0,0,0,0.05)] overflow-hidden">
@@ -22,11 +22,11 @@
                         @csrf
 
                         <!-- Email Address -->
-                        <div class="mb-6">
+                        <div class="mb-3">
                             <x-input-label for="email" :value="__('Email')" class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 block" />
                             <x-text-input 
                                 id="email" 
-                                class="block w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#7917f9]/50 focus:border-[#7917f9] transition-all duration-200 shadow-sm"
+                                class="block w-full px-4 py-1 rounded-md border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#7917f9]/50 focus:border-[#7917f9] transition-all duration-200 shadow-sm"
                                 type="email" 
                                 name="email" 
                                 :value="old('email')" 
@@ -39,11 +39,11 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="mb-6">
+                        <div class="mb-3">
                             <x-input-label for="password" :value="__('Mot de passe')" class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 block" />
                             <x-text-input 
                                 id="password" 
-                                class="block w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#7917f9]/50 focus:border-[#7917f9] transition-all duration-200 shadow-sm"
+                                class="block w-full px-4 py-1 rounded-md border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-[#7917f9]/50 focus:border-[#7917f9] transition-all duration-200 shadow-sm"
                                 type="password"
                                 name="password"
                                 required 
@@ -54,23 +54,23 @@
                         </div>
 
                         <!-- Remember Me & Forgot Password -->
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
                             <div class="flex items-center">
                                 <label for="remember_me" class="inline-flex items-center cursor-pointer">
                                     <div class="relative">
                                         <input id="remember_me" type="checkbox" class="peer sr-only" name="remember">
-                                        <div class="w-5 h-5 flex items-center justify-center rounded border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] peer-checked:border-[#7917f9] peer-checked:bg-[#7917f9] transition-all duration-200">
+                                        <div class="w-3 h-3 flex items-center justify-center rounded border border-gray-300 dark:border-[#3E3E3A] bg-white dark:bg-[#1e1e1d] peer-checked:border-[#7917f9] peer-checked:bg-[#7917f9] transition-all duration-200">
                                             <svg class="w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
                                             </svg>
                                         </div>
                                     </div>
-                                    <span class="ms-2 text-sm text-gray-700 dark:text-gray-300">{{ __('Se souvenir de moi') }}</span>
+                                    <span class="ms-2 text-[0.8rem] text-gray-700 dark:text-gray-300">{{ __('Se souvenir de moi') }}</span>
                                 </label>
                             </div>
 
                             @if (Route::has('password.request'))
-                                <a class="text-sm font-medium text-[#7917f9] hover:text-[#7917f9]/80 transition-colors duration-200" href="{{ route('password.request') }}">
+                                <a class="text-[0.8rem] font-medium text-[#7917f9] hover:text-[#7917f9]/80 transition-colors duration-200" href="{{ route('password.request') }}">
                                     {{ __('Mot de passe oublié ?') }}
                                 </a>
                             @endif
@@ -78,7 +78,7 @@
 
                         <!-- Submit Button & Register Link -->
                         <div class="space-y-4">
-                            <x-primary-button class="w-full bg-[#7917f9] hover:bg-[#7917f9]/90 text-white font-medium py-3 px-4 rounded-xl shadow-[0_2px_4px_0_rgba(121,23,249,0.25)] transition-all duration-200 flex items-center justify-center gap-2">
+                            <x-primary-button class="w-full bg-[#7917f9] hover:bg-[#7917f9]/90 text-white font-medium py-1 px-4 rounded-md shadow-[0_2px_4px_0_rgba(121,23,249,0.25)] transition-all duration-200 flex items-center justify-center gap-2">
                                 <span>{{ __('Se connecter') }}</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
