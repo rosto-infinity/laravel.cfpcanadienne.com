@@ -13,7 +13,7 @@ Route::get('/', function () {
     $partenaires = Partenaire::with('user')
         ->approuves()
         ->latest()
-        ->paginate(12);
+        ->paginate(15);
     return view('welcome', compact('partenaires'));
 })->name('welcome');
 
