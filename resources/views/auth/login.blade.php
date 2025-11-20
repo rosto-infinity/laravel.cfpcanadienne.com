@@ -7,7 +7,7 @@
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
                     Connectez-vous à votre compte
                 </h1>
-                <p class="text-gray-600 dark:text-gray-400 mt-1">
+                <p class="text-gray-600 dark:text-gray-400">
                     Entrez vos identifiants pour accéder à votre tableau de bord
                 </p>
             </div>
