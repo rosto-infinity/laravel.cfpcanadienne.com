@@ -58,33 +58,43 @@ class User extends Authenticatable
 /**
      * Accesseur pour s'assurer que le rôle est valide
      */
-    protected function role(): Attribute
-    {
-        return Attribute::make(
-            get: function ($value) {
-                // Si le rôle n'existe pas dans la config, utiliser le rôle par défaut
-                if (!Role::exists($value)) {
-                   \Log::warning("Rôle invalide détecté: {$value} pour l'utilisateur {$this->id}");
-                    return Role::default();
-                }
-                return Role::from($value);
-            },
-            set: function ($value) {
-                // Convertir en string si c'est un Enum
-                if ($value instanceof Role) {
-                    return $value->value;
-                }
-                
-                // Valider que le rôle existe
-                $roleString = strtolower(trim($value));
-                if (!Role::exists($roleString)) {
-                    throw new \InvalidArgumentException("Rôle invalide: {$value}");
-                }
-                
-                return $roleString;
+   /**
+ * Accesseur pour s'assurer que le rôle est valide
+ */
+protected function role(): Attribute
+{
+    return Attribute::make(
+        get: function ($value) {
+            // Si le rôle est null ou n'existe pas, utiliser le rôle par défaut
+            if ($value === null || !Role::exists($value)) {
+                \Log::warning("Rôle invalide ou null détecté: {$value} pour l'utilisateur {$this->id}");
+                return Role::default();
             }
-        );
-    }
+            return Role::from($value);
+        },
+        set: function ($value) {
+            // Si la valeur est null, utiliser le rôle par défaut
+            if ($value === null) {
+                return Role::default()->value;
+            }
+            
+            // Convertir en string si c'est un Enum
+            if ($value instanceof Role) {
+                return $value->value;
+            }
+            
+            // Valider que le rôle existe
+            $roleString = strtolower(trim($value));
+            if (!Role::exists($roleString)) {
+                // Utiliser le rôle par défaut au lieu de lever une exception
+                \Log::warning("Tentative d'attribution d'un rôle invalide: {$value}");
+                return Role::default()->value;
+            }
+            
+            return $roleString;
+        }
+    );
+}
 
     // Vérifications de rôle
     public function isSuperAdmin(): bool

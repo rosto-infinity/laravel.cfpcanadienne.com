@@ -9,51 +9,61 @@ enum Role: string
     case USER = 'user';
 
     /**
-     * Obtenir tous les rôles configurés dans .env
+     * Obtenir tous les rôles disponibles
      */
-    public static function values(): array
+    public static function availableRoles(): array
     {
-        return config('roles.roles', ['user']);
+        return array_map(fn($case) => $case->value, self::cases());
     }
 
     /**
-     * Vérifier si un rôle existe dans la configuration
+     * Vérifier si un rôle existe
      */
-    public static function exists(string $role): bool
+    public static function exists(?string $role): bool
     {
-        return in_array(strtolower($role), self::values());
+        // Gérer le cas où $role est null
+        if ($role === null) {
+            return false;
+        }
+        
+        return in_array(strtolower(trim($role)), self::availableRoles());
     }
 
     /**
      * Créer une instance depuis une chaîne avec validation
      */
-    public static function fromString(string $role): ?self
+    public static function fromString(?string $role): ?self
     {
-        $role = strtolower(trim($role));
-        
-        if (!self::exists($role)) {
+        if ($role === null) {
             return null;
         }
-
+        
+        $role = strtolower(trim($role));
         return self::tryFrom($role);
     }
 
     /**
-     * Obtenir le rôle par défaut depuis la config
+     * Obtenir le rôle par défaut
      */
     public static function default(): self
     {
         $defaultRole = config('roles.default_role', 'user');
-        return self::from($defaultRole);
+        $role = self::tryFrom($defaultRole);
+        
+        // Fallback si le rôle configuré n'existe pas
+        return $role ?? self::USER;
     }
 
     /**
-     * Obtenir le rôle superadmin depuis la config
+     * Obtenir le rôle superadmin
      */
     public static function superadmin(): self
     {
         $superadminRole = config('roles.superadmin_role', 'superadmin');
-        return self::from($superadminRole);
+        $role = self::tryFrom($superadminRole);
+        
+        // Fallback si le rôle configuré n'existe pas
+        return $role ?? self::SUPERADMIN;
     }
 
     /**
@@ -74,7 +84,12 @@ enum Role: string
      */
     public function level(): int
     {
-        return config("roles.hierarchy.{$this->value}", 0);
+        return match($this) {
+            self::SUPERADMIN => 100,
+            self::ADMIN => 80,
+            self::MANAGER => 50,
+            self::USER => 10,
+        };
     }
 
     /**
