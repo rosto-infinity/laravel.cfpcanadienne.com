@@ -25,6 +25,7 @@ class Partenaire extends Model
         return $this->belongsTo(User::class);
     }
 
+
     // Scopes pour filtrer par statut
     public function scopeApprouves($query)
     {
