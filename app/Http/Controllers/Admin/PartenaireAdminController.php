@@ -14,8 +14,7 @@ class PartenaireAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $statut = $request->get('statut', 'all');
-        
+        $statut = $request->get('statut', 'all');   
         $query = Partenaire::with('user')->latest();
         
         if ($statut !== 'all') {

@@ -49,7 +49,8 @@ Route::get('/partenaires', [PartenaireController::class, 'index'])->name('parten
 Route::get('/partenaires/{partenaire}', [PartenaireController::class, 'show'])->name('partenaires.show');
 
 // Routes SuperAdmin pour la gestion des partenaires
-Route::middleware(['auth', 'verified', 'role:' . Role::superadmin()->value])
+// Route::middleware(['auth', 'verified', 'role:' . Role::superadmin()->value])
+Route::middleware(['auth', 'role:superadmin'])
     ->prefix('superadmin')
     ->name('superadmin.')
     ->group(function () {
