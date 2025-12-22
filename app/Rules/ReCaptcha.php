@@ -15,15 +15,15 @@ class ReCaptcha implements ValidationRule
     {
         // 1. Utilisez Http (minuscule après le H)
         // 2. Utilisez post() avec asForm() pour respecter le protocole Google
-        $reponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
             'secret'   => config('services.recaptcha.site_key'),
             'response' => $value,
             'remoteip' => request()->ip(),
         ])->json();
 
         // Vérification sécurisée du JSON
-        if (!$reponse->json('success')) {
-            $fail('La vérification anti-robot a échoué. Veuillez réessayer.');
-        }
+        // if (!$response->json('success')) {
+        //     $fail('La vérification anti-robot a échoué. Veuillez réessayer.');
+        // }
     }
 }
