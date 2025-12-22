@@ -39,7 +39,6 @@ class RegisteredUserController extends Controller
     ], [
         'g-recaptcha-response.required' => 'La vérification anti-robot est obligatoire.',
     ]);
-
     // 2. On crée l'utilisateur avec seulement les champs de la base de données
     $user = User::create([
         'name' => $request->name,

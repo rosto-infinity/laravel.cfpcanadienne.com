@@ -99,7 +99,6 @@
                                 J'accepte les <a href="#" class="text-[#7917f9] hover:text-[#7917f9]/80 font-medium underline">conditions d'utilisation</a>
                             </label>
                         </div> --}}
-
                          <!-- g-recaptcha -->
                         <div class="mb-4 ">
                             <x-input-label :value="__('Vérification de sécurité')"
