@@ -80,7 +80,7 @@
                             <div class="flex justify-center items-center">
                                 <!-- Assurez-vous que la clé dans le .env est la même qu'ici -->
                                 <div class="g-recaptcha"
-                                    data-sitekey="{{ config('services.recaptcha.site_key') ?? env('GOOGLE_RECAPTCHA_SITE_KEY') }}">
+                                    data-sitekey="{{ config('services.recaptcha.site_key')}}"> 
                                 </div>
                             </div>
 

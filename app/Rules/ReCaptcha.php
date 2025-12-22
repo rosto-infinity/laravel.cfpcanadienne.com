@@ -4,21 +4,26 @@ namespace App\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Http; // Import crucial
 
 class ReCaptcha implements ValidationRule
 {
     /**
      * Run the validation rule.
-     *
-     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $reponse = HTTP::get('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => env('GOOGLE_RECAPTCHA_SECRET_KEY'),
+        // 1. Utilisez Http (minuscule après le H)
+        // 2. Utilisez post() avec asForm() pour respecter le protocole Google
+        $reponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret'   => config('services.recaptcha.site_key'),
             'response' => $value,
+            'remoteip' => request()->ip(),
         ])->json();
-            // dd($reponse);
+
+        // Vérification sécurisée du JSON
+        if (!$reponse->json('success')) {
+            $fail('La vérification anti-robot a échoué. Veuillez réessayer.');
+        }
     }
 }
