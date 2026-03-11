@@ -10,7 +10,7 @@
     </div>
 
     <!-- Statistiques -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div class="bg-gradient-to-br from-purple-500 to-[#7917f9] rounded-3xl shadow-xl p-6 text-white">
             <div class="flex items-center justify-between mb-4">
                 <div class="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center">
