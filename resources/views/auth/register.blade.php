@@ -100,7 +100,7 @@
                             </label>
                         </div> --}}
                          <!-- g-recaptcha -->
-                        {{-- <div class="mb-4 ">
+                        <div class="mb-4 ">
                             <x-input-label :value="__('Vérification de sécurité')"
                                 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 block" />
 
@@ -112,7 +112,7 @@
                             </div>
 
                             <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2 text-sm text-red-500 dark:text-red-400" />
-                        </div> --}}
+                        </div>
                         <!-- Submit Button & Login Link -->
                         <div class="space-y-4">
                             <x-primary-button class="w-full bg-[#7917f9] hover:bg-[#7917f9]/90 text-white font-medium py-3 px-4 rounded-md shadow-[0_2px_4px_0_rgba(121,23,249,0.25)] transition-all duration-200 flex items-center justify-center gap-2">

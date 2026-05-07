@@ -72,8 +72,8 @@
                                 </a>
                             @endif
                         </div>
-                        <!-- g-recaptcha -->
-                        {{-- <div class="mb-4 ">
+                        <!-- --g-recaptcha -->
+                        <div class="mb-4 ">
                             <x-input-label :value="__('Vérification de sécurité')"
                                 class="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 block" />
 
@@ -85,7 +85,7 @@
                             </div>
 
                             <x-input-error :messages="$errors->get('g-recaptcha-response')" class="mt-2 text-sm text-red-500 dark:text-red-400" />
-                        </div> --}}
+                        </div>
 
 
                         <!-- Submit Button & Register Link -->
