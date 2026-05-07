@@ -127,7 +127,7 @@ trait ValidatesAttributes
             try {
                 $records = $this->getDnsRecords($url.'.', DNS_A | DNS_AAAA);
 
-                if (is_array($records) && count($records) > 0) {
+                if (is_array($records) && $records !== []) {
                     return true;
                 }
             } catch (Exception) {
@@ -159,7 +159,7 @@ trait ValidatesAttributes
      */
     public function validateAscii($attribute, $value)
     {
-        return Str::isAscii($value);
+        return is_string($value) && Str::isAscii($value);
     }
 
     /**
@@ -277,13 +277,13 @@ trait ValidatesAttributes
      * Get the date timestamp.
      *
      * @param  mixed  $value
-     * @return int
+     * @return int|null
      */
     protected function getDateTimestamp($value)
     {
         $date = is_null($value) ? null : $this->getDateTime($value);
 
-        return $date ? $date->getTimestamp() : null;
+        return $date?->getTimestamp();
     }
 
     /**
@@ -349,6 +349,7 @@ trait ValidatesAttributes
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     * @param  array<int, int|string>  $parameters
      * @return bool
      */
     public function validateAlpha($attribute, $value, $parameters)
@@ -367,6 +368,7 @@ trait ValidatesAttributes
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     * @param  array<int, int|string>  $parameters
      * @return bool
      */
     public function validateAlphaDash($attribute, $value, $parameters)
@@ -388,6 +390,7 @@ trait ValidatesAttributes
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     * @param  array<int, int|string>  $parameters
      * @return bool
      */
     public function validateAlphaNum($attribute, $value, $parameters)
@@ -670,7 +673,7 @@ trait ValidatesAttributes
 
         $matches = [];
 
-        if (preg_match('/^[+-]?\d*\.?(\d*)$/', $value, $matches) !== 1) {
+        if (preg_match('/^[+-]?\d*\.?(\d*)$/', (string) $value, $matches) !== 1) {
             return false;
         }
 
@@ -721,8 +724,9 @@ trait ValidatesAttributes
     {
         $this->requireParameterCount(1, $parameters, 'digits');
 
-        return ! preg_match('/[^0-9]/', $value)
-                    && strlen((string) $value) == $parameters[0];
+        return (is_numeric($value) || is_string($value)) &&
+            ! preg_match('/[^0-9]/', $value) &&
+            strlen((string) $value) == $parameters[0];
     }
 
     /**
@@ -736,6 +740,10 @@ trait ValidatesAttributes
     public function validateDigitsBetween($attribute, $value, $parameters)
     {
         $this->requireParameterCount(2, $parameters, 'digits_between');
+
+        if (! is_string($value) && ! is_numeric($value)) {
+            return false;
+        }
 
         $length = strlen((string) $value);
 
@@ -956,6 +964,27 @@ trait ValidatesAttributes
         $emailValidator = Container::getInstance()->make(EmailValidator::class);
 
         return $emailValidator->isValid($value, new MultipleValidationWithAnd($validations));
+    }
+
+    /**
+     * Validate the encoding of an attribute.
+     *
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @param  array<int, int|string>  $parameters
+     * @return bool
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function validateEncoding($attribute, $value, $parameters)
+    {
+        $this->requireParameterCount(1, $parameters, 'encoding');
+
+        if (! in_array(mb_strtolower($parameters[0]), array_map(mb_strtolower(...), mb_list_encodings()))) {
+            throw new InvalidArgumentException("Validation rule encoding parameter [{$parameters[0]}] is not a valid encoding.");
+        }
+
+        return mb_check_encoding($value instanceof File ? $value->getContent() : $value, $parameters[0]);
     }
 
     /**
@@ -1428,7 +1457,7 @@ trait ValidatesAttributes
      */
     public function validateLowercase($attribute, $value, $parameters)
     {
-        return Str::lower($value) === $value;
+        return is_string($value) && Str::lower($value) === $value;
     }
 
     /**
@@ -1441,7 +1470,7 @@ trait ValidatesAttributes
      */
     public function validateUppercase($attribute, $value, $parameters)
     {
-        return Str::upper($value) === $value;
+        return is_string($value) && Str::upper($value) === $value;
     }
 
     /**
@@ -1453,7 +1482,7 @@ trait ValidatesAttributes
      */
     public function validateHexColor($attribute, $value)
     {
-        return preg_match('/^#(?:(?:[0-9a-f]{3}){1,2}|(?:[0-9a-f]{4}){1,2})$/i', $value) === 1;
+        return is_string($value) && preg_match('/^#(?:(?:[0-9a-f]{3}){1,2}|(?:[0-9a-f]{4}){1,2})$/i', $value) === 1;
     }
 
     /**
@@ -1492,7 +1521,7 @@ trait ValidatesAttributes
                 }
             }
 
-            return count(array_diff($value, $parameters)) === 0;
+            return array_diff($value, $parameters) === [];
         }
 
         return ! is_array($value) && in_array((string) $value, $parameters);
@@ -1553,7 +1582,7 @@ trait ValidatesAttributes
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @param  array{0: 'strict'}  $parameters
+     * @param  array{0?: 'strict'}  $parameters
      * @return bool
      */
     public function validateInteger($attribute, $value, array $parameters = [])
@@ -1668,9 +1697,13 @@ trait ValidatesAttributes
     {
         $this->requireParameterCount(1, $parameters, 'max_digits');
 
+        if (! is_string($value) && ! is_numeric($value)) {
+            return false;
+        }
+
         $length = strlen((string) $value);
 
-        return ! preg_match('/[^0-9]/', $value) && $length <= $parameters[0];
+        return ! preg_match('/[^0-9]/', (string) $value) && $length <= $parameters[0];
     }
 
     /**
@@ -1774,9 +1807,13 @@ trait ValidatesAttributes
     {
         $this->requireParameterCount(1, $parameters, 'min_digits');
 
+        if (! is_string($value) && ! is_numeric($value)) {
+            return false;
+        }
+
         $length = strlen((string) $value);
 
-        return ! preg_match('/[^0-9]/', $value) && $length >= $parameters[0];
+        return ! preg_match('/[^0-9]/', (string) $value) && $length >= $parameters[0];
     }
 
     /**
@@ -1879,6 +1916,8 @@ trait ValidatesAttributes
      * @param  mixed  $value
      * @param  array<int, int|string>  $parameters
      * @return bool
+     *
+     * @throws \Illuminate\Support\Exceptions\MathException
      */
     public function validateMultipleOf($attribute, $value, $parameters)
     {
@@ -2429,14 +2468,10 @@ trait ValidatesAttributes
      */
     protected function convertValuesToBoolean($values)
     {
-        return array_map(function ($value) {
-            if ($value === 'true') {
-                return true;
-            } elseif ($value === 'false') {
-                return false;
-            }
-
-            return $value;
+        return array_map(fn ($value) => match ($value) {
+            'true' => true,
+            'false' => false,
+            default => $value,
         }, $values);
     }
 
@@ -2613,7 +2648,7 @@ trait ValidatesAttributes
      */
     public function validateStartsWith($attribute, $value, $parameters)
     {
-        return Str::startsWith($value, $parameters);
+        return is_string($value) && Str::startsWith($value, $parameters);
     }
 
     /**
@@ -2626,7 +2661,7 @@ trait ValidatesAttributes
      */
     public function validateDoesntStartWith($attribute, $value, $parameters)
     {
-        return ! Str::startsWith($value, $parameters);
+        return is_string($value) && ! Str::startsWith($value, $parameters);
     }
 
     /**
@@ -2639,7 +2674,7 @@ trait ValidatesAttributes
      */
     public function validateEndsWith($attribute, $value, $parameters)
     {
-        return Str::endsWith($value, $parameters);
+        return is_string($value) && Str::endsWith($value, $parameters);
     }
 
     /**
@@ -2652,7 +2687,7 @@ trait ValidatesAttributes
      */
     public function validateDoesntEndWith($attribute, $value, $parameters)
     {
-        return ! Str::endsWith($value, $parameters);
+        return is_string($value) && ! Str::endsWith($value, $parameters);
     }
 
     /**
@@ -2736,7 +2771,7 @@ trait ValidatesAttributes
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return int|float|string
+     * @return int|string
      */
     protected function getSize($attribute, $value)
     {
@@ -2747,11 +2782,11 @@ trait ValidatesAttributes
         // is the size. If it is a file, we take kilobytes, and for a string the
         // entire length of the string will be considered the attribute size.
         if (is_numeric($value) && $hasNumeric) {
-            return $this->ensureExponentWithinAllowedRange($attribute, $this->trim($value));
+            return (string) $this->ensureExponentWithinAllowedRange($attribute, $this->trim($value));
         } elseif (is_array($value)) {
             return count($value);
         } elseif ($value instanceof File) {
-            return $value->getSize() / 1024;
+            return (string) ($value->getSize() / 1024);
         }
 
         return mb_strlen($value ?? '');
@@ -2858,11 +2893,11 @@ trait ValidatesAttributes
      * Trim the value if it is a string.
      *
      * @param  mixed  $value
-     * @return mixed
+     * @return string
      */
     protected function trim($value)
     {
-        return is_string($value) ? trim($value) : $value;
+        return is_string($value) ? trim($value) : (string) $value;
     }
 
     /**

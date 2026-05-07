@@ -1,4 +1,5 @@
 # {{ $exception->class() }} - {!! $exception->title() !!}
+
 {!! $exception->message() !!}
 
 PHP {{ PHP_VERSION }}
@@ -10,6 +11,20 @@ Laravel {{ app()->version() }}
 @foreach($exception->frames() as $index => $frame)
 {{ $index }} - {{ $frame->file() }}:{{ $frame->line() }}
 @endforeach
+
+@if ($exception->previousExceptions()->isNotEmpty())
+## Previous {{ \Illuminate\Support\Str::plural('exception', $exception->previousExceptions()->count()) }}
+@foreach ($exception->previousExceptions() as $index => $previous)
+
+### {{ $index + 1 }}. {{ $previous->class() }}
+
+{!! $previous->message() !!}
+
+@foreach($previous->frames() as $index => $frame)
+{{ $index }} - {{ $frame->file() }}:{{ $frame->line() }}
+@endforeach
+@endforeach
+@endif
 
 ## Request
 

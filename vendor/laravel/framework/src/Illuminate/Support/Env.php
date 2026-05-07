@@ -5,7 +5,6 @@ namespace Illuminate\Support;
 use Closure;
 use Dotenv\Repository\Adapter\PutenvAdapter;
 use Dotenv\Repository\RepositoryBuilder;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use PhpOption\Option;
 use RuntimeException;
@@ -121,13 +120,13 @@ class Env
     /**
      * Write an array of key-value pairs to the environment file.
      *
-     * @param  array  $variables
+     * @param  array<string, mixed>  $variables
      * @param  string  $pathToFile
      * @param  bool  $overwrite
      * @return void
      *
-     * @throws RuntimeException
-     * @throws FileNotFoundException
+     * @throws \RuntimeException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function writeVariables(array $variables, string $pathToFile, bool $overwrite = false): void
     {
@@ -155,8 +154,8 @@ class Env
      * @param  bool  $overwrite
      * @return void
      *
-     * @throws RuntimeException
-     * @throws FileNotFoundException
+     * @throws \RuntimeException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function writeVariable(string $key, mixed $value, string $pathToFile, bool $overwrite = false): void
     {
@@ -179,9 +178,9 @@ class Env
      *
      * @param  string  $key
      * @param  mixed  $value
-     * @param  array  $envLines
+     * @param  array<int, string>  $envLines
      * @param  bool  $overwrite
-     * @return array
+     * @return array<int, string>
      */
     protected static function addVariableToEnvContents(string $key, mixed $value, array $envLines, bool $overwrite): array
     {
@@ -294,7 +293,7 @@ class Env
      * Escape a string using addslashes, excluding the specified characters from being escaped.
      *
      * @param  string  $value
-     * @param  array  $except
+     * @param  array<string>  $except
      * @return string
      */
     protected static function addSlashesExceptFor(string $value, array $except = [])

@@ -11,6 +11,7 @@ use Illuminate\Console\Application;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Log\Context\Repository;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Stringable;
@@ -130,6 +131,8 @@ class Event
             return;
         }
 
+        $this->ensureMutexIsReleasedOnSignal();
+
         $exitCode = $this->start($container);
 
         if (! $this->runInBackground) {
@@ -197,8 +200,10 @@ class Event
      */
     protected function execute($container)
     {
+        $context = json_encode($container[Repository::class]->dehydrate());
+
         return Process::fromShellCommandline(
-            $this->buildCommand(), base_path(), null, null, null
+            $this->buildCommand(), base_path(), ['__LARAVEL_CONTEXT' => $context], null, null
         )->run(
             laravel_cloud()
                 ? fn ($type, $line) => fwrite($type === 'out' ? STDOUT : STDERR, $line)
@@ -284,6 +289,16 @@ class Event
     public function runsInMaintenanceMode()
     {
         return $this->evenInMaintenanceMode;
+    }
+
+    /**
+     * Determine if the event runs when the scheduler is paused.
+     *
+     * @return bool
+     */
+    public function runsWhenPaused()
+    {
+        return $this->evenWhenPaused;
     }
 
     /**
@@ -812,7 +827,7 @@ class Event
         }
 
         return 'framework'.DIRECTORY_SEPARATOR.'schedule-'.
-            sha1($this->expression.$this->normalizeCommand($this->command ?? ''));
+            sha1($this->expression.self::normalizeCommand($this->command ?? ''));
     }
 
     /**
@@ -826,6 +841,30 @@ class Event
         $this->mutexNameResolver = is_string($mutexName) ? fn () => $mutexName : $mutexName;
 
         return $this;
+    }
+
+    /**
+     * Ensure the mutex is released if the process receives a termination signal.
+     *
+     * @return void
+     */
+    protected function ensureMutexIsReleasedOnSignal()
+    {
+        if (! $this->releaseOnTerminationSignals ||
+            $this->runInBackground ||
+            ! extension_loaded('pcntl')) {
+            return;
+        }
+
+        pcntl_async_signals(true);
+
+        foreach ([SIGTERM, SIGINT, SIGQUIT] as $signal) {
+            pcntl_signal($signal, function () {
+                $this->removeMutex();
+
+                exit(1);
+            });
+        }
     }
 
     /**

@@ -11,6 +11,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\ConnectionResolverInterface as Resolver;
 use Illuminate\Database\Events\MigrationEnded;
 use Illuminate\Database\Events\MigrationsEnded;
+use Illuminate\Database\Events\MigrationSkipped;
 use Illuminate\Database\Events\MigrationsStarted;
 use Illuminate\Database\Events\MigrationStarted;
 use Illuminate\Database\Events\NoPendingMigrations;
@@ -54,7 +55,7 @@ class Migrator
     /**
      * The custom connection resolver callback.
      *
-     * @var \Closure|null
+     * @var (\Closure(\Illuminate\Database\ConnectionResolverInterface, ?string): \Illuminate\Database\Connection)|null
      */
     protected static $connectionResolverCallback;
 
@@ -182,7 +183,7 @@ class Migrator
         // First we will just make sure that there are any migrations to run. If there
         // aren't, we will just make a note of it to the developer so they're aware
         // that all of the migrations have been run against this database system.
-        if (count($migrations) === 0) {
+        if ($migrations === []) {
             $this->fireMigrationEvent(new NoPendingMigrations('up'));
 
             $this->write(Info::class, 'Nothing to migrate');
@@ -245,6 +246,8 @@ class Migrator
             : true;
 
         if (! $shouldRunMigration) {
+            $this->fireMigrationEvent(new MigrationSkipped($name));
+
             $this->write(Task::class, $name, fn () => MigrationResult::Skipped->value);
         } else {
             $this->write(Task::class, $name, fn () => $this->runMigration($migration, 'up'));
@@ -287,7 +290,7 @@ class Migrator
      * Get the migrations for a rollback operation.
      *
      * @param  array<string, mixed>  $options
-     * @return array
+     * @return object{id: int, migration: string, batch: int}[]
      */
     protected function getMigrationsForRollback(array $options)
     {
@@ -359,7 +362,7 @@ class Migrator
         // the database back into its "empty" state ready for the migrations.
         $migrations = array_reverse($this->repository->getRan());
 
-        if (count($migrations) === 0) {
+        if ($migrations === []) {
             $this->write(Info::class, 'Nothing to rollback.');
 
             return [];
@@ -652,8 +655,10 @@ class Migrator
     /**
      * Execute the given callback using the given connection as the default connection.
      *
+     * @template TReturn
+     *
      * @param  string  $name
-     * @param  callable  $callback
+     * @param  (callable(): TReturn)  $callback
      * @return mixed
      */
     public function usingConnection($name, callable $callback)
@@ -708,7 +713,7 @@ class Migrator
     /**
      * Set a connection resolver callback.
      *
-     * @param  \Closure  $callback
+     * @param  \Closure(\Illuminate\Database\ConnectionResolverInterface, ?string): \Illuminate\Database\Connection  $callback
      * @return void
      */
     public static function resolveConnectionsUsing(Closure $callback)
