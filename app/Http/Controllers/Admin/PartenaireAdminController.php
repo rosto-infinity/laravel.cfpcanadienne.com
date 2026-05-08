@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -14,15 +16,15 @@ class PartenaireAdminController extends Controller
      */
     public function index(Request $request)
     {
-        $statut = $request->get('statut', 'all');   
+        $statut = $request->get('statut', 'all');
         $query = Partenaire::with('user')->latest();
-        
+
         if ($statut !== 'all') {
             $query->where('statut', $statut);
         }
-        
+
         $partenaires = $query->paginate(15);
-        
+
         // Statistiques
         $stats = [
             'total' => Partenaire::count(),
@@ -30,7 +32,7 @@ class PartenaireAdminController extends Controller
             'approuves' => Partenaire::approuves()->count(),
             'rejetes' => Partenaire::rejetes()->count(),
         ];
-        
+
         return view('admin.partenaires.index', compact('partenaires', 'stats', 'statut'));
     }
 
@@ -40,6 +42,7 @@ class PartenaireAdminController extends Controller
     public function show(Partenaire $partenaire)
     {
         $partenaire->load('user');
+
         return view('admin.partenaires.show', compact('partenaire'));
     }
 
@@ -49,9 +52,9 @@ class PartenaireAdminController extends Controller
     public function approuver(Partenaire $partenaire)
     {
         $partenaire->update(['statut' => 'approuve']);
-        
+
         // TODO: Envoyer une notification email à l'utilisateur
-        
+
         return redirect()
             ->back()
             ->with('success', "Le partenaire '{$partenaire->nom}' a été approuvé avec succès.");
@@ -63,13 +66,13 @@ class PartenaireAdminController extends Controller
     public function rejeter(Request $request, Partenaire $partenaire)
     {
         $request->validate([
-            'raison' => 'nullable|string|max:500'
+            'raison' => 'nullable|string|max:500',
         ]);
-        
+
         $partenaire->update(['statut' => 'rejete']);
-        
+
         // TODO: Envoyer une notification email avec la raison du rejet
-        
+
         return redirect()
             ->back()
             ->with('success', "Le partenaire '{$partenaire->nom}' a été rejeté.");
@@ -84,10 +87,10 @@ class PartenaireAdminController extends Controller
         if ($partenaire->logo) {
             Storage::disk('public')->delete($partenaire->logo);
         }
-        
+
         $nom = $partenaire->nom;
         $partenaire->delete();
-        
+
         return redirect()
             ->route('superadmin.partenaires.index')
             ->with('success', "Le partenaire '{$nom}' a été supprimé définitivement.");

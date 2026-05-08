@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Models\Partenaire;
 use App\Http\Requests\PartenaireRequest;
-use Illuminate\Http\Request;
+use App\Models\Partenaire;
 use Illuminate\Support\Facades\Storage;
 
 class PartenaireController extends Controller

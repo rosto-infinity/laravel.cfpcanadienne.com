@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +27,6 @@ class Partenaire extends Model
         return $this->belongsTo(User::class);
     }
 
-
     // Scopes pour filtrer par statut
     public function scopeApprouves($query)
     {
@@ -48,6 +49,7 @@ class Partenaire extends Model
         if ($this->logo) {
             return Storage::url($this->logo);
         }
+
         return null;
     }
 
@@ -72,22 +74,22 @@ class Partenaire extends Model
     // Badge de statut avec couleur
     public function getBadgeStatutAttribute()
     {
-        return match($this->statut) {
+        return match ($this->statut) {
             'approuve' => [
                 'text' => 'Approuvé',
-                'class' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
+                'class' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
             ],
             'en_attente' => [
                 'text' => 'En attente',
-                'class' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
+                'class' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
             ],
             'rejete' => [
                 'text' => 'Rejeté',
-                'class' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+                'class' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
             ],
             default => [
                 'text' => 'Inconnu',
-                'class' => 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+                'class' => 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300',
             ]
         };
     }

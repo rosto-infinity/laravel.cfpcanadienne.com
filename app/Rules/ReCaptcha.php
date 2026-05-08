@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
 use Closure;
@@ -13,17 +15,18 @@ class ReCaptcha implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        // 1. Utilisez Http (minuscule après le H)
-        // 2. Utilisez post() avec asForm() pour respecter le protocole Google
+        if (app()->environment('testing')) {
+            return;
+        }
+
         $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret'   => config('services.recaptcha.site_key'),
+            'secret' => config('services.recaptcha.site_key'),
             'response' => $value,
             'remoteip' => request()->ip(),
         ])->json();
 
-        // Vérification sécurisée du JSON
-        // if (!$response->json('success')) {
-        //     $fail('La vérification anti-robot a échoué. Veuillez réessayer.');
-        // }
+        if (!($response['success'] ?? false)) {
+            $fail('La vérification anti-robot a échoué. Veuillez réessayer.');
+        }
     }
 }

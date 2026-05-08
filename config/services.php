@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -35,7 +37,7 @@ return [
         ],
     ],
     'recaptcha' => [
-        'site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY')
+        'site_key' => env('GOOGLE_RECAPTCHA_SITE_KEY'),
     ],
 
 ];

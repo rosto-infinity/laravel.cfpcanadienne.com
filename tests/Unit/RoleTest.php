@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Enums\Role;
@@ -22,13 +25,13 @@ class RoleTest extends TestCase
     public function test_default_role_is_correct(): void
     {
         $defaultRole = Role::default();
-        $this->assertEquals(config('roles.default_role'), $defaultRole->value);
+        $this->assertEquals(config('roles.default'), $defaultRole->value);
     }
 
     public function test_superadmin_role_is_correct(): void
     {
         $superadminRole = Role::superadmin();
-        $this->assertEquals(config('roles.superadmin_role'), $superadminRole->value);
+        $this->assertEquals(config('roles.superadmin'), $superadminRole->value);
     }
 
     public function test_role_hierarchy(): void

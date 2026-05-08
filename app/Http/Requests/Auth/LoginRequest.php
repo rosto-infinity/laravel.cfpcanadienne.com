@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Auth;
 
 use App\Rules\ReCaptcha;
-use Illuminate\Support\Str;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -19,37 +22,40 @@ class LoginRequest extends FormRequest
     {
         return true;
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
-            'g-recaptcha-response' => ['required', new ReCaptcha()],
+            'g-recaptcha-response' => ['required', new ReCaptcha],
         ];
     }
-  public function messages(): array
+
+    public function messages(): array
     {
-       return [
-        // Email
-        'email.required' => 'L\'adresse email est obligatoire pour vous connecter.',
-        'email.email'    => 'Le format de l\'adresse email n\'est pas valide.',
-        
-        // Mot de passe
-        'password.required' => 'Le mot de passe est requis.',
-        
-        // ReCaptcha (Priorité sécurité)
-        'g-recaptcha-response.required' => 'La vérification anti-robot est obligatoire.',
-    ];
+        return [
+            // Email
+            'email.required' => 'L\'adresse email est obligatoire pour vous connecter.',
+            'email.email' => 'Le format de l\'adresse email n\'est pas valide.',
+
+            // Mot de passe
+            'password.required' => 'Le mot de passe est requis.',
+
+            // ReCaptcha (Priorité sécurité)
+            'g-recaptcha-response.required' => 'La vérification anti-robot est obligatoire.',
+        ];
     }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate(): void
     {
@@ -69,7 +75,7 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {
@@ -96,5 +102,4 @@ class LoginRequest extends FormRequest
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
     }
-   
 }

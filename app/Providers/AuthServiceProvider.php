@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Enums\Role;
@@ -19,25 +21,31 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         // Gates basés sur les rôles
-        Gate::define('manage-users', fn(User $user) => 
-            $user->hasMinimumRole(Role::ADMIN)
+        Gate::define(
+            'manage-users',
+            fn (User $user) => $user->hasMinimumRole(Role::ADMIN)
         );
 
-        Gate::define('view-admin-dashboard', fn(User $user) => 
-            $user->hasMinimumRole(Role::ADMIN)
+        Gate::define(
+            'view-admin-dashboard',
+            fn (User $user) => $user->hasMinimumRole(Role::ADMIN)
         );
 
-        Gate::define('manage-content', fn(User $user) => 
-            $user->hasMinimumRole(Role::MANAGER)
+        Gate::define(
+            'manage-content',
+            fn (User $user) => $user->hasMinimumRole(Role::MANAGER)
         );
 
         // Gates basés sur les permissions
         foreach (config('roles.permissions', []) as $role => $permissions) {
             foreach ($permissions as $permission) {
-                if ($permission === '*') continue;
-                
-                Gate::define($permission, fn(User $user) => 
-                    $user->role->hasPermission($permission)
+                if ($permission === '*') {
+                    continue;
+                }
+
+                Gate::define(
+                    $permission,
+                    fn (User $user) => $user->role->hasPermission($permission)
                 );
             }
         }
