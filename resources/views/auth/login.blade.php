@@ -88,7 +88,7 @@
                         </div>
 
 
-                        <!-- Submit Button & Register Link -->
+                        <!-- Submit -Button & Register Link -->
                         <div class="space-y-4">
                             <x-primary-button
                                 class="w-full bg-[#7917f9] hover:bg-[#7917f9]/90 text-white font-medium py-1 px-4 rounded-md shadow-[0_2px_4px_0_rgba(121,23,249,0.25)] transition-all duration-200 flex items-center justify-center gap-2">
