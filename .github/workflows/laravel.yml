@@ -9,6 +9,9 @@ on:
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
+    env:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
 
     steps:
       - uses: actions/checkout@v4
@@ -58,10 +61,7 @@ jobs:
           touch database/database.sqlite
 
       - name: Run migrations
-        run: php artisan migrate --env=testing --force
+        run: php artisan migrate --force
 
       - name: Run tests (Pest)
         run: php artisan test
-        env:
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
